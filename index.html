@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MedConnect – Tu salud, a un clic</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- ===================== PANTALLA 0: ONBOARDING ===================== -->
+<div id="screen-onboarding" class="screen active">
+  <div class="onboarding-bg">
+    <div class="blob blob-1" aria-hidden="true"></div>
+    <div class="blob blob-2" aria-hidden="true"></div>
+  </div>
+  <div class="onboarding-content">
+    <div class="onboarding-slides">
+
+      <!-- Slide 1 -->
+      <div class="slide active" id="slide-1" role="region" aria-label="Paso 1 de 3: Bienvenida">
+        <div class="slide-icon" aria-hidden="true">🩺</div>
+        <h1 class="slide-title">Bienvenido a <span class="brand">MedConnect</span></h1>
+        <p class="slide-body">Aquí puedes hablar con un médico desde tu casa, sin filas y sin complicaciones.</p>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="slide" id="slide-2" role="region" aria-label="Paso 2 de 3: Cómo funciona">
+        <div class="slide-icon" aria-hidden="true">📅</div>
+        <h2 class="slide-title">Así de sencillo</h2>
+        <ul class="step-list" role="list">
+          <li role="listitem"><span class="step-num" aria-hidden="true">1</span> Escoge el día y la hora que más te convenga</li>
+          <li role="listitem"><span class="step-num" aria-hidden="true">2</span> Conéctate a la videollamada con tu médico</li>
+          <li role="listitem"><span class="step-num" aria-hidden="true">3</span> Recibe tu fórmula o recomendación al instante</li>
+        </ul>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="slide" id="slide-3" role="region" aria-label="Paso 3 de 3: Privacidad">
+        <div class="slide-icon" aria-hidden="true">🔒</div>
+        <h2 class="slide-title">Tu información está segura</h2>
+        <p class="slide-body">Solo tú y tu médico pueden ver lo que compartes. Nunca vendemos tus datos.</p>
+      </div>
+
+    </div>
+
+    <!-- Indicadores de slide -->
+    <div class="slide-dots" role="tablist" aria-label="Navegación de pasos del tutorial">
+      <button class="dot active" role="tab" aria-selected="true" aria-label="Paso 1" data-slide="0"></button>
+      <button class="dot" role="tab" aria-selected="false" aria-label="Paso 2" data-slide="1"></button>
+      <button class="dot" role="tab" aria-selected="false" aria-label="Paso 3" data-slide="2"></button>
+    </div>
+
+    <div class="onboarding-actions">
+      <button class="btn-primary" id="btn-next-slide" aria-label="Ir al siguiente paso">Siguiente</button>
+      <button class="btn-ghost" id="btn-skip-onboarding" aria-label="Saltar tutorial e ir al inicio de sesión">Saltar tutorial</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PANTALLA 1: INICIO DE SESIÓN ===================== -->
+<div id="screen-login" class="screen">
+  <div class="auth-layout">
+    <div class="auth-brand" aria-hidden="true">
+      <span class="brand-mark">✦</span>
+      <span class="brand-name">MedConnect</span>
+    </div>
+    <div class="auth-card">
+      <h1 class="auth-title">Ingresa a tu cuenta</h1>
+      <p class="auth-subtitle">Escribe tu correo y contraseña para continuar.</p>
+
+      <form id="login-form" novalidate aria-label="Formulario de inicio de sesión">
+        <div class="field-group">
+          <label class="field-label" for="login-email">Correo electrónico</label>
+          <input
+            class="field-input"
+            type="email"
+            id="login-email"
+            name="email"
+            placeholder="ejemplo@correo.com"
+            autocomplete="email"
+            aria-required="true"
+            aria-describedby="login-email-hint login-email-error"
+          />
+          <span class="field-hint" id="login-email-hint">El mismo que usaste cuando te registraste.</span>
+          <span class="field-error hidden" id="login-email-error" role="alert" aria-live="polite"></span>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="login-password">Contraseña</label>
+          <div class="input-wrap">
+            <input
+              class="field-input"
+              type="password"
+              id="login-password"
+              name="password"
+              placeholder="Tu contraseña"
+              autocomplete="current-password"
+              aria-required="true"
+              aria-describedby="login-password-error"
+            />
+            <button type="button" class="toggle-password" aria-label="Mostrar u ocultar contraseña" data-target="login-password">
+              <span aria-hidden="true">👁</span>
+            </button>
+          </div>
+          <span class="field-error hidden" id="login-password-error" role="alert" aria-live="polite"></span>
+        </div>
+
+        <div class="form-error-banner hidden" id="login-banner" role="alert" aria-live="assertive">
+          <span aria-hidden="true">⚠️</span> El correo o la contraseña no coinciden. Intenta de nuevo.
+        </div>
+
+        <button type="submit" class="btn-primary full-width" id="btn-login">Entrar</button>
+      </form>
+
+      <p class="auth-switch">¿No tienes cuenta? <button class="link-btn" id="btn-go-register">Regístrate aquí, es gratis</button></p>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PANTALLA 2: REGISTRO ===================== -->
+<div id="screen-register" class="screen">
+  <div class="auth-layout">
+    <div class="auth-brand" aria-hidden="true">
+      <span class="brand-mark">✦</span>
+      <span class="brand-name">MedConnect</span>
+    </div>
+    <div class="auth-card wide">
+      <h1 class="auth-title">Crea tu cuenta</h1>
+      <p class="auth-subtitle">Solo necesitas unos minutos. Toda tu información está protegida.</p>
+
+      <form id="register-form" novalidate aria-label="Formulario de registro">
+        <div class="field-row">
+          <div class="field-group">
+            <label class="field-label" for="reg-name">Nombre completo</label>
+            <input class="field-input" type="text" id="reg-name" placeholder="Ej: María García" autocomplete="name" aria-required="true" aria-describedby="reg-name-error" />
+            <span class="field-error hidden" id="reg-name-error" role="alert" aria-live="polite"></span>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="reg-dob">Fecha de nacimiento</label>
+            <input class="field-input" type="date" id="reg-dob" aria-required="true" aria-describedby="reg-dob-error" />
+            <span class="field-error hidden" id="reg-dob-error" role="alert" aria-live="polite"></span>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="reg-email">Correo electrónico</label>
+          <input class="field-input" type="email" id="reg-email" placeholder="ejemplo@correo.com" autocomplete="email" aria-required="true" aria-describedby="reg-email-hint reg-email-error" />
+          <span class="field-hint" id="reg-email-hint">Te enviaremos la confirmación de tus citas aquí.</span>
+          <span class="field-error hidden" id="reg-email-error" role="alert" aria-live="polite"></span>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label class="field-label" for="reg-password">Contraseña</label>
+            <div class="input-wrap">
+              <input class="field-input" type="password" id="reg-password" placeholder="Mínimo 8 caracteres" autocomplete="new-password" aria-required="true" aria-describedby="reg-password-hint reg-password-error" />
+              <button type="button" class="toggle-password" aria-label="Mostrar u ocultar contraseña" data-target="reg-password"><span aria-hidden="true">👁</span></button>
+            </div>
+            <span class="field-hint" id="reg-password-hint">Usa letras y números para que sea más segura.</span>
+            <span class="field-error hidden" id="reg-password-error" role="alert" aria-live="polite"></span>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="reg-password2">Confirma tu contraseña</label>
+            <div class="input-wrap">
+              <input class="field-input" type="password" id="reg-password2" placeholder="Repite tu contraseña" autocomplete="new-password" aria-required="true" aria-describedby="reg-password2-error" />
+              <button type="button" class="toggle-password" aria-label="Mostrar u ocultar contraseña" data-target="reg-password2"><span aria-hidden="true">👁</span></button>
+            </div>
+            <span class="field-error hidden" id="reg-password2-error" role="alert" aria-live="polite"></span>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="reg-eps">EPS o seguro médico <span class="optional">(opcional)</span></label>
+          <select class="field-input" id="reg-eps" aria-describedby="reg-eps-hint">
+            <option value="">Selecciona tu EPS o seguro</option>
+            <option value="sura">Sura</option>
+            <option value="nueva_eps">Nueva EPS</option>
+            <option value="sanitas">Sanitas</option>
+            <option value="compensar">Compensar</option>
+            <option value="particular">Pago particular</option>
+            <option value="otro">Otro</option>
+          </select>
+          <span class="field-hint" id="reg-eps-hint">Esto nos ayuda a mostrarte médicos disponibles para ti.</span>
+        </div>
+
+        <button type="submit" class="btn-primary full-width" id="btn-register">Crear mi cuenta</button>
+      </form>
+
+      <p class="auth-switch">¿Ya tienes cuenta? <button class="link-btn" id="btn-go-login">Inicia sesión aquí</button></p>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PANTALLA 3: INICIO (DASHBOARD) ===================== -->
+<div id="screen-home" class="screen">
+  <nav class="topbar" role="navigation" aria-label="Navegación principal">
+    <div class="topbar-brand" aria-label="MedConnect - Inicio">
+      <span class="brand-mark" aria-hidden="true">✦</span>
+      <span class="brand-name">MedConnect</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" aria-label="Notificaciones" id="btn-notifications">
+        <span aria-hidden="true">🔔</span>
+        <span class="badge" aria-label="2 notificaciones sin leer">2</span>
+      </button>
+      <button class="avatar-btn" id="btn-user-menu" aria-label="Menú de usuario" aria-expanded="false" aria-haspopup="true">
+        <span class="avatar" aria-hidden="true">MP</span>
+      </button>
+      <div class="user-menu hidden" id="user-menu" role="menu" aria-label="Opciones de usuario">
+        <div class="user-menu-info" role="none">
+          <strong id="menu-user-name">María Pérez</strong>
+          <span id="menu-user-email">maria@correo.com</span>
+        </div>
+        <button class="user-menu-item" role="menuitem" id="btn-goto-history">
+          <span aria-hidden="true">📋</span> Mi historial médico
+        </button>
+        <button class="user-menu-item danger" role="menuitem" id="btn-logout">
+          <span aria-hidden="true">🚪</span> Cerrar sesión
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="home-main" role="main">
+    <section class="hero-greeting" aria-labelledby="greeting-heading">
+      <div>
+        <p class="greeting-sub">Buenos días,</p>
+        <h1 class="greeting-name" id="greeting-heading">María <span aria-hidden="true">👋</span></h1>
+        <p class="greeting-msg">¿Cómo te sientes hoy? Estamos aquí para ayudarte.</p>
+      </div>
+      <div class="quick-status" aria-label="Tu próxima cita">
+        <span class="status-label">Próxima cita</span>
+        <span class="status-value" id="next-appointment">Ninguna agendada</span>
+      </div>
+    </section>
+
+    <section class="home-actions" aria-labelledby="actions-heading">
+      <h2 class="section-title" id="actions-heading">¿Qué necesitas hoy?</h2>
+      <div class="action-grid" role="list">
+        <button class="action-card" role="listitem" id="btn-goto-schedule" aria-label="Agendar una nueva cita médica">
+          <span class="action-icon" aria-hidden="true">📅</span>
+          <span class="action-label">Agendar cita</span>
+          <span class="action-desc">Elige tu médico, día y hora</span>
+        </button>
+        <button class="action-card" role="listitem" id="btn-goto-call" aria-label="Unirte a tu videollamada médica">
+          <span class="action-icon" aria-hidden="true">📹</span>
+          <span class="action-label">Videollamada</span>
+          <span class="action-desc">Conéctate con tu médico ahora</span>
+        </button>
+        <button class="action-card" role="listitem" id="btn-upload-doc" aria-label="Subir documentos médicos o exámenes">
+          <span class="action-icon" aria-hidden="true">📎</span>
+          <span class="action-label">Subir documentos</span>
+          <span class="action-desc">Exámenes, fórmulas, imágenes</span>
+        </button>
+        <button class="action-card" role="listitem" id="btn-goto-history2" aria-label="Ver tu historial médico completo">
+          <span class="action-icon" aria-hidden="true">📋</span>
+          <span class="action-label">Mi historial</span>
+          <span class="action-desc">Consultas anteriores y fórmulas</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Modal: subir documento -->
+    <div class="modal-overlay hidden" id="upload-modal" role="dialog" aria-modal="true" aria-labelledby="upload-title">
+      <div class="modal-card">
+        <button class="modal-close" id="close-upload-modal" aria-label="Cerrar ventana de carga de documentos">✕</button>
+        <h2 class="modal-title" id="upload-title">Sube tus documentos</h2>
+        <p class="modal-body">Puedes cargar exámenes de laboratorio, fórmulas médicas o imágenes médicas en formato PDF o JPG.</p>
+        <div class="drop-zone" id="drop-zone" role="region" aria-label="Zona para arrastrar y soltar archivos">
+          <span class="drop-icon" aria-hidden="true">📂</span>
+          <p class="drop-text">Arrastra tu archivo aquí<br /><span class="drop-sub">o haz clic para buscarlo en tu dispositivo</span></p>
+          <input type="file" id="file-input" class="visually-hidden" accept=".pdf,.jpg,.jpeg,.png" aria-label="Selecciona un archivo para subir" />
+        </div>
+        <div class="upload-success hidden" id="upload-success" role="status" aria-live="polite">
+          <span aria-hidden="true">✅</span> <strong>¡Listo!</strong> Tu documento se guardó correctamente.
+        </div>
+        <button class="btn-primary full-width" id="btn-confirm-upload" disabled aria-disabled="true">Subir documento</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ===================== PANTALLA 4: AGENDAR CITA ===================== -->
+<div id="screen-schedule" class="screen">
+  <div class="subscreen-layout">
+    <button class="back-btn" data-back="home" aria-label="Volver al inicio">
+      <span aria-hidden="true">←</span> Volver
+    </button>
+    <h1 class="subscreen-title">Agenda tu cita</h1>
+    <p class="subscreen-sub">Elige el tipo de consulta, el médico y el horario que más te convenga.</p>
+
+    <form id="schedule-form" novalidate aria-label="Formulario para agendar cita médica">
+
+      <!-- Paso 1: Tipo de consulta -->
+      <fieldset class="schedule-section">
+        <legend class="section-label">¿Qué tipo de consulta necesitas?</legend>
+        <div class="type-grid" role="list">
+          <label class="type-option" role="listitem">
+            <input type="radio" name="consult-type" value="general" aria-describedby="type-general-desc" />
+            <span class="type-icon" aria-hidden="true">🩺</span>
+            <span class="type-name">Medicina general</span>
+            <span class="type-desc" id="type-general-desc">Para dolencias comunes, gripes, dolores</span>
+          </label>
+          <label class="type-option" role="listitem">
+            <input type="radio" name="consult-type" value="psych" aria-describedby="type-psych-desc" />
+            <span class="type-icon" aria-hidden="true">🧠</span>
+            <span class="type-name">Salud mental</span>
+            <span class="type-desc" id="type-psych-desc">Para ansiedad, estrés, depresión</span>
+          </label>
+          <label class="type-option" role="listitem">
+            <input type="radio" name="consult-type" value="nutri" aria-describedby="type-nutri-desc" />
+            <span class="type-icon" aria-hidden="true">🥗</span>
+            <span class="type-name">Nutrición</span>
+            <span class="type-desc" id="type-nutri-desc">Planes de alimentación y hábitos</span>
+          </label>
+          <label class="type-option" role="listitem">
+            <input type="radio" name="consult-type" value="pediatric" aria-describedby="type-ped-desc" />
+            <span class="type-icon" aria-hidden="true">👶</span>
+            <span class="type-name">Pediatría</span>
+            <span class="type-desc" id="type-ped-desc">Para niños y bebés</span>
+          </label>
+        </div>
+        <span class="field-error hidden" id="type-error" role="alert" aria-live="polite">Por favor elige el tipo de consulta.</span>
+      </fieldset>
+
+      <!-- Paso 2: Médico -->
+      <div class="schedule-section">
+        <label class="section-label" for="doctor-select">Elige tu médico</label>
+        <select class="field-input" id="doctor-select" aria-required="true" aria-describedby="doctor-select-error">
+          <option value="">Ver médicos disponibles</option>
+          <option value="dr_ramirez">Dr. Andrés Ramírez — Medicina general · ⭐ 4.9</option>
+          <option value="dra_torres">Dra. Camila Torres — Salud mental · ⭐ 4.8</option>
+          <option value="dra_morales">Dra. Luisa Morales — Nutrición · ⭐ 4.7</option>
+          <option value="dr_castillo">Dr. Felipe Castillo — Pediatría · ⭐ 4.9</option>
+        </select>
+        <span class="field-error hidden" id="doctor-select-error" role="alert" aria-live="polite">Por favor elige un médico.</span>
+      </div>
+
+      <!-- Paso 3: Fecha -->
+      <div class="schedule-section">
+        <label class="section-label" for="appt-date">¿Cuándo quieres la cita?</label>
+        <input class="field-input" type="date" id="appt-date" aria-required="true" aria-describedby="appt-date-hint appt-date-error" />
+        <span class="field-hint" id="appt-date-hint">Solo puedes agendar con al menos un día de anticipación.</span>
+        <span class="field-error hidden" id="appt-date-error" role="alert" aria-live="polite"></span>
+      </div>
+
+      <!-- Paso 4: Hora -->
+      <fieldset class="schedule-section">
+        <legend class="section-label">Elige la hora</legend>
+        <div class="time-grid" role="list" id="time-slots">
+          <label class="time-slot" role="listitem"><input type="radio" name="time-slot" value="08:00" /><span>8:00 am</span></label>
+          <label class="time-slot" role="listitem"><input type="radio" name="time-slot" value="09:00" /><span>9:00 am</span></label>
+          <label class="time-slot" role="listitem"><input type="radio" name="time-slot" value="10:00" /><span>10:00 am</span></label>
+          <label class="time-slot" role="listitem"><input type="radio" name="time-slot" value="11:00" /><span>11:00 am</span></label>
+          <label class="time-slot" role="listitem"><input type="radio" name="time-slot" value="14:00" /><span>2:00 pm</span></label>
+          <label class="time-slot" role="listitem"><input type="radio" name="time-slot" value="15:00" /><span>3:00 pm</span></label>
+          <label class="time-slot" role="listitem"><input type="radio" name="time-slot" value="16:00" /><span>4:00 pm</span></label>
+          <label class="time-slot" role="listitem"><input type="radio" name="time-slot" value="17:00" /><span>5:00 pm</span></label>
+        </div>
+        <span class="field-error hidden" id="time-error" role="alert" aria-live="polite">Por favor elige una hora.</span>
+      </fieldset>
+
+      <!-- Motivo -->
+      <div class="schedule-section">
+        <label class="section-label" for="appt-reason">¿Por qué consultas? <span class="optional">(opcional)</span></label>
+        <textarea class="field-input" id="appt-reason" rows="3" placeholder="Ej: Llevo 3 días con dolor de cabeza y fiebre" aria-describedby="reason-hint" maxlength="300"></textarea>
+        <span class="field-hint" id="reason-hint">Describe con tus palabras cómo te sientes. Esto ayuda al médico a prepararse.</span>
+      </div>
+
+      <button type="submit" class="btn-primary full-width" id="btn-confirm-appt">Confirmar cita</button>
+    </form>
+  </div>
+</div>
+
+<!-- ===================== PANTALLA 5: CONFIRMACIÓN DE CITA ===================== -->
+<div id="screen-confirm" class="screen">
+  <div class="confirm-layout">
+    <div class="confirm-card" role="main" aria-labelledby="confirm-heading">
+      <div class="confirm-icon" aria-hidden="true">✅</div>
+      <h1 class="confirm-title" id="confirm-heading">¡Tu cita quedó agendada!</h1>
+      <p class="confirm-sub">Te enviamos un recordatorio a tu correo. Aquí está el resumen:</p>
+
+      <dl class="confirm-summary" aria-label="Resumen de tu cita">
+        <div class="summary-row">
+          <dt class="summary-label">Médico</dt>
+          <dd class="summary-value" id="conf-doctor">—</dd>
+        </div>
+        <div class="summary-row">
+          <dt class="summary-label">Tipo de consulta</dt>
+          <dd class="summary-value" id="conf-type">—</dd>
+        </div>
+        <div class="summary-row">
+          <dt class="summary-label">Fecha</dt>
+          <dd class="summary-value" id="conf-date">—</dd>
+        </div>
+        <div class="summary-row">
+          <dt class="summary-label">Hora</dt>
+          <dd class="summary-value" id="conf-time">—</dd>
+        </div>
+      </dl>
+
+      <div class="confirm-tip" role="note">
+        <span aria-hidden="true">💡</span> <strong>Consejo:</strong> Conéctate 5 minutos antes de tu cita para revisar tu cámara y micrófono.
+      </div>
+
+      <div class="confirm-actions">
+        <button class="btn-primary" id="btn-goto-videocall-from-confirm" aria-label="Ir ahora a la videollamada">Ir a la videollamada</button>
+        <button class="btn-ghost" id="btn-back-home-from-confirm" aria-label="Volver al inicio">Volver al inicio</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PANTALLA 6: VIDEOLLAMADA ===================== -->
+<div id="screen-videocall" class="screen">
+  <div class="call-layout">
+    <!-- Video principal: médico -->
+    <div class="call-main-video" aria-label="Video del médico" role="img">
+      <div class="doctor-video-placeholder" aria-hidden="true">
+        <div class="video-avatar">👨‍⚕️</div>
+        <span class="video-name-tag">Dr. Andrés Ramírez</span>
+      </div>
+      <div class="call-status-badge" id="call-status-badge" role="status" aria-live="polite">Conectando…</div>
+    </div>
+
+    <!-- Video propio -->
+    <div class="call-self-video" aria-label="Tu propio video" role="img">
+      <div class="self-video-placeholder" aria-hidden="true">
+        <span>Tú</span>
+      </div>
+    </div>
+
+    <!-- Info de llamada -->
+    <div class="call-info" aria-label="Información de la llamada">
+      <span class="call-timer" id="call-timer" aria-label="Tiempo de llamada">00:00</span>
+      <span class="call-doctor-label">Con: <strong>Dr. Andrés Ramírez</strong></span>
+    </div>
+
+    <!-- Controles -->
+    <div class="call-controls" role="toolbar" aria-label="Controles de la videollamada">
+      <button class="call-btn" id="btn-toggle-mic" aria-label="Silenciar micrófono" aria-pressed="false">
+        <span aria-hidden="true">🎤</span>
+        <span class="call-btn-label">Micrófono</span>
+      </button>
+      <button class="call-btn" id="btn-toggle-cam" aria-label="Apagar cámara" aria-pressed="false">
+        <span aria-hidden="true">📹</span>
+        <span class="call-btn-label">Cámara</span>
+      </button>
+      <button class="call-btn" id="btn-toggle-chat" aria-label="Abrir chat de la llamada" aria-pressed="false">
+        <span aria-hidden="true">💬</span>
+        <span class="call-btn-label">Chat</span>
+      </button>
+      <button class="call-btn danger" id="btn-end-call" aria-label="Terminar y salir de la videollamada">
+        <span aria-hidden="true">📵</span>
+        <span class="call-btn-label">Salir</span>
+      </button>
+    </div>
+
+    <!-- Panel de chat lateral -->
+    <div class="call-chat hidden" id="call-chat" role="complementary" aria-label="Chat durante la llamada">
+      <div class="chat-header">
+        <span>Chat con el médico</span>
+        <button class="icon-btn" id="close-chat" aria-label="Cerrar chat">✕</button>
+      </div>
+      <div class="chat-messages" id="chat-messages" aria-live="polite" aria-label="Mensajes del chat"></div>
+      <div class="chat-input-row">
+        <input type="text" class="field-input" id="chat-input" placeholder="Escribe un mensaje…" aria-label="Escribe tu mensaje para el médico" />
+        <button class="btn-primary small" id="btn-send-chat" aria-label="Enviar mensaje">Enviar</button>
+      </div>
+    </div>
+
+    <!-- Modal: fin de llamada -->
+    <div class="modal-overlay hidden" id="endcall-modal" role="dialog" aria-modal="true" aria-labelledby="endcall-title">
+      <div class="modal-card">
+        <h2 class="modal-title" id="endcall-title">¿Quieres terminar la consulta?</h2>
+        <p class="modal-body">Si sales ahora, la videollamada terminará. Puedes volver a conectarte desde tu historial si lo necesitas.</p>
+        <div class="modal-actions">
+          <button class="btn-primary" id="btn-confirm-end-call">Sí, terminar consulta</button>
+          <button class="btn-ghost" id="btn-cancel-end-call">No, seguir en la llamada</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PANTALLA 7: HISTORIAL MÉDICO ===================== -->
+<div id="screen-history" class="screen">
+  <div class="subscreen-layout">
+    <button class="back-btn" data-back="home" aria-label="Volver al inicio">
+      <span aria-hidden="true">←</span> Volver
+    </button>
+    <h1 class="subscreen-title">Tu historial médico</h1>
+    <p class="subscreen-sub">Aquí puedes ver todas tus consultas anteriores y los documentos que subiste.</p>
+
+    <div class="history-tabs" role="tablist" aria-label="Secciones del historial">
+      <button class="history-tab active" role="tab" aria-selected="true" aria-controls="tab-consultas" id="tab-btn-consultas">Consultas</button>
+      <button class="history-tab" role="tab" aria-selected="false" aria-controls="tab-docs" id="tab-btn-docs">Documentos</button>
+    </div>
+
+    <div id="tab-consultas" role="tabpanel" aria-labelledby="tab-btn-consultas">
+    </div>
+
+    <div id="tab-docs" role="tabpanel" aria-labelledby="tab-btn-docs" class="hidden">
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TOAST de notificación ===================== -->
+<div class="toast hidden" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
